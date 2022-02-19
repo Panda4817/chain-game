@@ -1,0 +1,7 @@
+footer {
+    flex-grow: 0;
+  }
+  #footer_text {
+    font-size: 1em;
+    padding: 10px;
+  }

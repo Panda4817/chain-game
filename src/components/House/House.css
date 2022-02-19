@@ -1,0 +1,16 @@
+.house {
+    margin: 1%;
+    padding: 2%;
+}
+
+.bought {
+    background-color: rgb(211, 142, 115);
+}
+
+.canBuy {
+    background-color: rgb(69, 128, 182);
+}
+
+.start {
+    background-color: rgb(99, 79, 148);
+}
