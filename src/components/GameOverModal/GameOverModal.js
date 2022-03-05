@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Modal.css";
+import "../../styles/Modal.css";
 
 const GameOverModal = ({score, total, reset, chain, longestChain, biggestGrid}) => {
     const getWinnerMsg = (score) => {
@@ -20,8 +20,8 @@ const GameOverModal = ({score, total, reset, chain, longestChain, biggestGrid}) 
         <div
 			className="modal fade"
 			id="gameOver"
-			data-backdrop="static"
-			data-keyboard="false"
+			data-bs-backdrop="static"
+			data-bs-keyboard="false"
 			tabIndex="-1"
 			aria-labelledby="staticBackdropLabel"
 			aria-hidden="true"

@@ -1,78 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import GameOverModal from '../GameOverModal/GameOverModal';
 import House from '../House/House';
-import { Modal } from 'bootstrap'
+import { Modal } from 'bootstrap';
+import { MAX_PRICE, MAX_SAVINGS, MIN_GRID, MIN_PRICE, MIN_SAVINGS } from '../../constants/gameConstants';
+import {getRandomInt} from '../../utils/helpers';
 
-const MIN_GRID = 3;
-const MAX_PRICE = 100;
-const MIN_PRICE = 10;
-const MAX_SAVINGS = 45;
-const MIN_SAVINGS = 2;
-
-const Grid = () => {
-    const getRandomInt = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    const [longestChain, setLongestChain] = useState(() => {
-        const longestChainString = localStorage.getItem('longestChain');
-        return JSON.parse(longestChainString) ?? 0;
-    })
-    const [biggestGrid, setbiggestGrid] = useState(() => {
-        const biggestGridString = localStorage.getItem('biggestGrid');
-        return JSON.parse(biggestGridString) ?? MIN_GRID-1;
-    })
-    const [gridSize, setGridSize] = useState(MIN_GRID);
-    const [current, setCurrent] = useState({ row: getRandomInt(0, gridSize), col: getRandomInt(0, gridSize) });
-    
+const Grid = ({longestChain, setLongestChain, biggestGrid, setbiggestGrid, scores, setScores}) => {
 
     const resetGrid = () => {
         let grid = [];
         for (let row = 0; row < gridSize; row++) {
             let currentRow = [];
             for (let col = 0; col < gridSize; col++) {
-                currentRow.push({ 
-                    price: getRandomInt(MIN_PRICE, MAX_PRICE) * 10000, 
-                    savings: getRandomInt(MIN_SAVINGS, MAX_SAVINGS) * 10000, 
-                    current: row === current.row && col === current.col ? true : false, 
-                    start: row === current.row && col === current.col ? true : false, 
-                    bought: false });
+                currentRow.push({
+                    price: getRandomInt(MIN_PRICE, MAX_PRICE) * 10000,
+                    savings: getRandomInt(MIN_SAVINGS, MAX_SAVINGS) * 10000,
+                    current: row === current.row && col === current.col ? true : false,
+                    start: row === current.row && col === current.col ? true : false,
+                    bought: false
+                });
             }
             grid.push(currentRow);
         }
         return grid;
     }
-
+   
+    const [gridSize, setGridSize] = useState(MIN_GRID);
+    const [current, setCurrent] = useState({ row: getRandomInt(0, gridSize), col: getRandomInt(0, gridSize) });
     const [houseCount, setHouseCount] = useState(0);
     const [grid, setGrid] = useState(resetGrid());
     const [chain, setChain] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
     const updateGrid = (col, row, chosenHouse, currentHouse) => {
         setHouseCount(houseCount + 1);
-            setGrid(() => {
-                let newGrid = [];
-                for (let r = 0; r < gridSize; r++) {
-                    let currentRow = [];
-                    for (let c = 0; c < gridSize; c++) {
-                        if (c === col && r === row) {
-                            chosenHouse.bought = true;
-                            chosenHouse.current = true;
-                            currentRow.push(chosenHouse);
-                        } else if (c === current.col && r === current.row) {
-                            currentHouse.current = false;
-                            currentRow.push(currentHouse);
-                        } else {
-                            currentRow.push(grid.at(r).at(c));
-                        }
-                        
+        setGrid(() => {
+            let newGrid = [];
+            for (let r = 0; r < gridSize; r++) {
+                let currentRow = [];
+                for (let c = 0; c < gridSize; c++) {
+                    if (c === col && r === row) {
+                        chosenHouse.bought = true;
+                        chosenHouse.current = true;
+                        currentRow.push(chosenHouse);
+                    } else if (c === current.col && r === current.row) {
+                        currentHouse.current = false;
+                        currentRow.push(currentHouse);
+                    } else {
+                        currentRow.push(grid.at(r).at(c));
                     }
-                    newGrid.push(currentRow);
+
                 }
-                return newGrid;
-            });
-            setCurrent({row: row, col: col});
+                newGrid.push(currentRow);
+            }
+            return newGrid;
+        });
+        setCurrent({ row: row, col: col });
     }
 
     const isGameOver = (chosenHouse, col, row) => {
@@ -103,18 +86,32 @@ const Grid = () => {
         } else if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === true) {
             updateGrid(col, row, chosenHouse, currentHouse);
             setChain(true);
-            localStorage.setItem("biggestGrid", JSON.stringify(gridSize));
-            setbiggestGrid(gridSize)
             new Modal(document.getElementById('gameOver')).show();
         }
     }
 
     const checkLongestChain = () => {
         if (houseCount > longestChain) {
-            localStorage.setItem("longestChain", JSON.stringify(houseCount));
+            localStorage.setItem('longestChain', JSON.stringify(houseCount));
+            setLongestChain(houseCount);
         }
-        setLongestChain(houseCount);
 
+    }
+
+    const checkBiggestChain = () => {
+        if (gridSize > biggestGrid) {
+            localStorage.setItem('biggestGrid', JSON.stringify(gridSize));
+            setbiggestGrid(gridSize);
+        }
+    }
+
+    const updateScores = () => {
+        if (scores.has(gridSize)) {
+            scores.set(gridSize, Math.max(scores.get(gridSize), houseCount));
+        } else {
+            scores.set(gridSize, houseCount);
+        }
+        localStorage.setItem('scores', JSON.stringify([...scores]));
     }
 
     const reset = () => {
@@ -123,6 +120,7 @@ const Grid = () => {
         } else {
             setGridSize(MIN_GRID);
         }
+        setGameOver(true);
         new Modal(document.getElementById('gameOver')).hide();
     }
 
@@ -130,24 +128,29 @@ const Grid = () => {
     useEffect(() => {
         if (chain) {
             checkLongestChain();
+            checkBiggestChain();
+            updateScores();
         }
-    // eslint-disable-next-line     
+        // eslint-disable-next-line     
     }, [chain])
 
 
     useEffect(() => {
-        setCurrent({row: getRandomInt(0,gridSize), col: getRandomInt(0, gridSize)});
+        setCurrent({ row: getRandomInt(0, gridSize), col: getRandomInt(0, gridSize) });
         setHouseCount(0);
         setChain(false);
-    }, [gridSize])
+        setGameOver(false)
+        setScores(new Map(JSON.parse(localStorage.getItem('scores'))));
+        // eslint-disable-next-line 
+    }, [gameOver])
 
-    
+
     useEffect(() => {
-        if (houseCount === 0)  {
+        if (houseCount === 0) {
             setGrid(resetGrid());
         }
-    // eslint-disable-next-line    
-    }, [houseCount])
+        // eslint-disable-next-line    
+    }, [current])
 
 
     return (
@@ -166,15 +169,15 @@ const Grid = () => {
                                     key={houseId}
                                     col={houseId}
                                     row={rowId}
-                                    onSelect={house.bought === false ? selected : () => {}}
-                                    
+                                    onSelect={house.bought === false ? selected : () => { }}
+
                                 />
                             )
                         })}
                     </div>
                 )
             })}
-            <GameOverModal 
+            <GameOverModal
                 score={houseCount}
                 total={gridSize * gridSize}
                 chain={chain}

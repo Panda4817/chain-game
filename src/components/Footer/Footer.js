@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopyright } from '@fortawesome/free-solid-svg-icons'
-import "./Footer.css"
+import "../../styles/Footer.css"
 
 const Footer = () => (
     <footer id="footer" className="container">
