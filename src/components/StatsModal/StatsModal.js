@@ -20,10 +20,84 @@ const StatsModal = ({ scores }) => {
             ]
         })
     }
-    const [chartData, setChartData] = useState(updateChartData())
 
+    const updateOptions = () => {
+        return ({
+            plugins: {
+                title: {
+                    display: true,
+                    text: ["Longest housing chain", "per grid size completed"],
+                    color: WHITE,
+                    font: {
+                        size: 20,
+                    },
+                    
+                },
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        title: (context) => {
+                            let size = parseInt(context.at(0).label);
+                            let value = context.at(0).raw;
+                            let fullChain = value === size * size ? "FULL CHAIN!" : ""
+                            return [`Grid size: ${size}`, fullChain];
+                        }
+                    },
+                    bodyColor: WHITE
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                  title: {
+                      display: false,
+                  },
+                  ticks: {
+                      color: WHITE,
+                      font: {
+                        size: 15
+                    },
+                    precision: 0,
+                  
+                  },
+                  grid: {
+                      color: WHITE,
+                      borderWidth: 0
+                  },
+                  min: 0,
+                  sugestedMax: Math.max(...scores.values()),
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Grid size",
+                        color: WHITE,
+                        font: {
+                            size: 15
+                        }
+                    },
+                    ticks: {
+                        color: WHITE,
+                        font: {
+                            size: 15
+                        }
+                    },
+                    grid: {
+                        display: false,
+                    }
+                }
+              }     
+        })
+    }
+    const [chartData, setChartData] = useState(updateChartData());
+    const [chartOptions, setChartOptions] = useState(updateOptions());
+;
     useEffect(() => {
         setChartData(updateChartData());
+        setChartOptions(updateOptions);
       // eslint-disable-next-line 
     },[scores])
 
@@ -50,69 +124,10 @@ const StatsModal = ({ scores }) => {
                     <div className="modal-body">
                         <div className="container">
                             <div className="row justify-content-center">
-                                <div className="col text-center">
+                                <div className="col text-center" style={{position: "relative", height:"75vh", width:"80vw"}}>
                                     {scores.size !== 0 ? <Bar
                                         data={chartData}
-                                        options={{
-                                            plugins: {
-                                                title: {
-                                                    display: true,
-                                                    text: "Longest housing chain for each grid size completed",
-                                                    color: WHITE,
-                                                    font: {
-                                                        size: 20
-                                                    }
-                                                },
-                                                legend: {
-                                                    display: false,
-                                                },
-                                                tooltip: {
-                                                    callbacks: {
-                                                        title: (context) => "Grid size: " + context.at(0).label
-                                                    },
-                                                    bodyColor: WHITE
-                                                }
-                                            },
-                                            responsive: true,
-                                            scales: {
-                                                y: {
-                                                  title: {
-                                                      display: false,
-                                                  },
-                                                  ticks: {
-                                                      color: WHITE,
-                                                      font: {
-                                                        size: 15
-                                                    },
-                                                    precision: 0,
-                                                  
-                                                  },
-                                                  grid: {
-                                                      color: WHITE,
-                                                      borderWidth: 0
-                                                  }
-                                                },
-                                                x: {
-                                                    title: {
-                                                        display: true,
-                                                        text: "Grid size",
-                                                        color: WHITE,
-                                                        font: {
-                                                            size: 15
-                                                        }
-                                                    },
-                                                    ticks: {
-                                                        color: WHITE,
-                                                        font: {
-                                                            size: 15
-                                                        }
-                                                    },
-                                                    grid: {
-                                                        display: false,
-                                                    }
-                                                }
-                                              }     
-                                        }}
+                                        options={chartOptions}
                                     /> : "Play the game to generate stats"}
                                 </div>
                             </div>

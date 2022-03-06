@@ -81,15 +81,19 @@ const Grid = ({longestChain, setLongestChain, biggestGrid, setbiggestGrid, score
         modal.show();
     }
 
+    const notChosenCurrentHouse = (col, row) => {
+        return !(current.row === row && current.col === col);
+    }
+
     const selected = (col, row) => {
         let currentHouse = grid.at(current.row).at(current.col);
         let chosenHouse = grid.at(row).at(col);
-        if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === false) {
+        if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === false && notChosenCurrentHouse(col, row)) {
             updateGrid(col, row, chosenHouse, currentHouse);
             if (isGameOver(chosenHouse, col, row)) {
                 showGameOverModal();
             }
-        } else if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === true) {
+        } else if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === true && notChosenCurrentHouse(col, row)) {
             updateGrid(col, row, chosenHouse, currentHouse);
             setChain(true);
             showGameOverModal();
