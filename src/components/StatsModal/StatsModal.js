@@ -57,7 +57,7 @@ const StatsModal = ({ scores }) => {
                                             plugins: {
                                                 title: {
                                                     display: true,
-                                                    text: "Longest chain for each grid size completed",
+                                                    text: "Longest housing chain for each grid size completed",
                                                     color: WHITE,
                                                     font: {
                                                         size: 20
@@ -78,7 +78,7 @@ const StatsModal = ({ scores }) => {
                                                 y: {
                                                   title: {
                                                       display: true,
-                                                      text: "Longest chain",
+                                                      text: "Chain length",
                                                       color: WHITE,
                                                       font: {
                                                           size: 20
@@ -100,7 +100,7 @@ const StatsModal = ({ scores }) => {
                                                 x: {
                                                     title: {
                                                         display: true,
-                                                        text: "Grid sizes",
+                                                        text: "Grid size",
                                                         color: WHITE,
                                                         font: {
                                                             size: 20
