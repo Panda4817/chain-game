@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders title', () => {
   render(<App />);
-  const navElement = screen.getByText(/Chain-Agent/i);
+  const navElement = screen.getByText(/Chain Agent/i);
   expect(navElement).toBeInTheDocument();
 });

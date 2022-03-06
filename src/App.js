@@ -6,7 +6,7 @@ import HelpModal from './components/HelpModal/HelpModal';
 import {MIN_GRID} from './constants/gameConstants';
 import StatsModal from './components/StatsModal/StatsModal';
 
-console.log("Enjoy playing Chain-Agent! Do not cheat!")
+console.log("Enjoy playing Chain Agent! Do not cheat!")
 
 const App = () => {
   
