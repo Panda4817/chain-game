@@ -75,18 +75,24 @@ const Grid = ({longestChain, setLongestChain, biggestGrid, setbiggestGrid, score
         return true;
     }
 
+    const showGameOverModal = () => {
+        const target = document.getElementById('gameOver');
+        const modal = new Modal(target);
+        modal.show();
+    }
+
     const selected = (col, row) => {
         let currentHouse = grid.at(current.row).at(current.col);
         let chosenHouse = grid.at(row).at(col);
         if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === false) {
             updateGrid(col, row, chosenHouse, currentHouse);
             if (isGameOver(chosenHouse, col, row)) {
-                new Modal(document.getElementById('gameOver')).show();
+                showGameOverModal();
             }
         } else if (chosenHouse.price <= (currentHouse.price + currentHouse.savings) && chosenHouse.start === true) {
             updateGrid(col, row, chosenHouse, currentHouse);
             setChain(true);
-            new Modal(document.getElementById('gameOver')).show();
+            showGameOverModal();
         }
     }
 
@@ -114,17 +120,6 @@ const Grid = ({longestChain, setLongestChain, biggestGrid, setbiggestGrid, score
         localStorage.setItem('scores', JSON.stringify([...scores]));
     }
 
-    const reset = () => {
-        if (chain) {
-            setGridSize(gridSize + 1);
-        } else {
-            setGridSize(MIN_GRID);
-        }
-        setGameOver(true);
-        new Modal(document.getElementById('gameOver')).hide();
-    }
-
-
     useEffect(() => {
         if (chain) {
             checkLongestChain();
@@ -134,6 +129,14 @@ const Grid = ({longestChain, setLongestChain, biggestGrid, setbiggestGrid, score
         // eslint-disable-next-line     
     }, [chain])
 
+    const reset = () => {
+        if (chain) {
+            setGridSize(gridSize + 1);
+        } else {
+            setGridSize(MIN_GRID);
+        }
+        setGameOver(true);
+    }
 
     useEffect(() => {
         setCurrent({ row: getRandomInt(0, gridSize), col: getRandomInt(0, gridSize) });

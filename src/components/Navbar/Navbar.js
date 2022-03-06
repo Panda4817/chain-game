@@ -12,7 +12,7 @@ const Navbar = () => (
                 <h1 className="navbar-brand mb-0">
                     <FontAwesomeIcon icon={faHouse} />&nbsp;
                     <FontAwesomeIcon icon={faHouse} />&nbsp;
-                    <strong>Chain-Agent</strong>
+                    <strong>Chain Agent</strong>
                     &nbsp;<FontAwesomeIcon icon={faHouse} />
                     &nbsp;<FontAwesomeIcon icon={faHouse} />
                 </h1>

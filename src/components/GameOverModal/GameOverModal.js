@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../styles/Modal.css";
 
-const GameOverModal = ({score, total, reset, chain, longestChain, biggestGrid}) => {
+const GameOverModal = ({score, total, chain, reset, longestChain, biggestGrid}) => {
     const getWinnerMsg = (score) => {
         if (chain === false) {
             return "You have a broken chain! Maybe you should rethink your career as an estate agent!"
