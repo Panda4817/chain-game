@@ -3,14 +3,14 @@
     padding: 2%;
 }
 
-.bought {
+.bought, .bought:hover {
     background-color: rgb(211, 142, 115);
 }
 
-.canBuy {
+.canBuy, .canBuy:hover {
     background-color: rgb(69, 128, 182);
 }
 
-.start {
+.start, .start:hover {
     background-color: rgb(99, 79, 148);
 }

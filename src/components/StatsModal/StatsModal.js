@@ -77,17 +77,12 @@ const StatsModal = ({ scores }) => {
                                             scales: {
                                                 y: {
                                                   title: {
-                                                      display: true,
-                                                      text: "Chain length",
-                                                      color: WHITE,
-                                                      font: {
-                                                          size: 20
-                                                      }
+                                                      display: false,
                                                   },
                                                   ticks: {
                                                       color: WHITE,
                                                       font: {
-                                                        size: 20
+                                                        size: 15
                                                     },
                                                     precision: 0,
                                                   
@@ -103,13 +98,13 @@ const StatsModal = ({ scores }) => {
                                                         text: "Grid size",
                                                         color: WHITE,
                                                         font: {
-                                                            size: 20
+                                                            size: 15
                                                         }
                                                     },
                                                     ticks: {
                                                         color: WHITE,
                                                         font: {
-                                                            size: 20
+                                                            size: 15
                                                         }
                                                     },
                                                     grid: {

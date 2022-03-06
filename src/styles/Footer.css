@@ -5,3 +5,11 @@ footer {
     font-size: 1em;
     padding: 10px;
   }
+
+a {
+  color: whitesmoke;
+}
+
+a:hover {
+  color: rgb(69, 128, 182);
+}

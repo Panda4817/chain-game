@@ -8,7 +8,7 @@ const Footer = () => (
       <div className="row justify-content-center">
         <div className="col-12 text-center">
           <p id="footer_text">
-            Created by KMunton<br />
+            Created by <a href="https://github.kmunton.dev" target="_blank" rel="noreferrer">KMunton</a><br />
             <FontAwesomeIcon icon={faCopyright} /> {new Date().getFullYear()}
           </p>
         </div>
