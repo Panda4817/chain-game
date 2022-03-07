@@ -17,7 +17,7 @@ deploy:
   bucket: "chain-agent.kmunton.dev"
   glob: "build/**"
   region: eu-west-1
-  skip_cleanup: true
+  cleanup: true
   on:
     branch: main
 after_deploy:
