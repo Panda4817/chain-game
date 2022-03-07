@@ -1,0 +1,25 @@
+language: node_js
+node_js: 
+  - '17'
+language: python
+python:
+  - '3.9'
+install:
+  - pip install --user awscli
+  - npm install
+script: 
+  - npm test
+before_deploy: 
+  - npm build
+deploy:
+  provider: s3
+  access_key_id: "$ACCESSKEYID"
+  secret_access_key: "$SECRETACCESSKEY"
+  bucket: "chain-agent.kmunton.dev"
+  glob: "build/**"
+  region: eu-west-1
+  skip_cleanup: true
+  on:
+    branch: main
+after_deploy:
+  - aws cloudfront create-invalidation --distribution-id $DISTRIBUTIONID --paths "/*"
