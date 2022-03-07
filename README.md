@@ -1,6 +1,7 @@
 # Chain Agent Game
 
 The aim is to create the longest complete housing chains on each grid size.\
+CI/CD pipeline set up with Travis CI.\
 Deployed on AWS using S3 bucket and Cloudfront.\
 Play the game [here](https://chain-agent.kmunton.dev)
 

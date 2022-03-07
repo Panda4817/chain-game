@@ -8,7 +8,8 @@ install:
   - npm install
 script: 
   - npm test
-before_deploy: 
+before_deploy:
+  - aws s3 rm s3://chain-agent.kmunton.dev --recursive
   - npm run build
 deploy:
   provider: s3
