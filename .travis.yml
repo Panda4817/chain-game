@@ -5,7 +5,7 @@ language: python
 python:
   - '3.9'
 install:
-  - pip install --user awscli
+  - pip install awscli
   - npm install
 script: 
   - npm test
