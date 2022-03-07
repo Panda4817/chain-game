@@ -1,13 +1,14 @@
 # Chain Agent Game
+[![Build Status](https://app.travis-ci.com/Panda4817/chain-game.svg?branch=main)](https://app.travis-ci.com/Panda4817/chain-game.svg?branch=main)
 
-The aim is to create the longest complete housing chains on each grid size.\
+The aim is to create the longest complete housing chain on each grid size.\
 CI/CD pipeline set up with Travis CI.\
 Deployed on AWS using S3 bucket and Cloudfront.\
 Play the game [here](https://chain-agent.kmunton.dev)
 
 ## Attribution
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-- Styles by [Bootstrap 5](https://getbootstrap.com/)
+- Styled using [Bootstrap 5](https://getbootstrap.com/)
 - Icons and logo by [Font Awesome](https://fontawesome.com/license/free)
 - Charts by [Chart.js](https://www.chartjs.org/)
 
