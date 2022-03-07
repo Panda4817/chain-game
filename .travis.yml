@@ -9,6 +9,8 @@ install:
 script: 
   - npm test
 before_deploy:
+  - aws configure set aws_access_key_id $ACCESSKEYID
+  - aws configure set aws_secret_access_key $SECRETACCESSKEY
   - aws s3 rm s3://chain-agent.kmunton.dev --recursive
   - npm run build
 deploy:
