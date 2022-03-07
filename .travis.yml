@@ -16,8 +16,8 @@ deploy:
   secret_access_key: "$SECRETACCESSKEY"
   bucket: "chain-agent.kmunton.dev"
   glob: "build/**"
-  region: eu-west-1
-  cleanup: true
+  region: eu-west-2
+  skip_cleanup: true
   on:
     branch: main
 after_deploy:
